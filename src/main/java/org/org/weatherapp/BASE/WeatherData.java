@@ -10,9 +10,10 @@ public class WeatherData implements Subject {
     private double temperature;
     private double humidity;
     private double pressure;
+
     private List<Observer> observers = new ArrayList<>();
 
-    public WeatherData(String city, double temperature, double humidity, double pressure) {
+    public WeatherData(String city, double temperature, double pressure, double humidity) {
         this.city = city;
         this.temperature = temperature;
         this.humidity = humidity;
@@ -61,5 +62,13 @@ public class WeatherData implements Subject {
 
     public double getPressure() {
         return pressure;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
