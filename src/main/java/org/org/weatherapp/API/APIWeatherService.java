@@ -2,6 +2,7 @@ package org.org.weatherapp.API;
 
 import com.google.gson.*;
 import org.org.weatherapp.BASE.WeatherData;
+import org.org.weatherapp.BASE.WeatherDescription;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
@@ -66,4 +67,35 @@ public class APIWeatherService {
         }
         return null;
     }
+    public static WeatherDescription getWeatherDescription(String city) {
+        JsonObject jsonCity = APILocationReader.getLocationData(city);
+        String latitude = jsonCity.get("lat").getAsString();
+        String longitude = jsonCity.get("lon").getAsString();
+        final String API_URL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid="+API_KEY+"&units=metric";
+        try {
+            HttpsURLConnection apiConnection = (HttpsURLConnection) fetchAPIConnection(API_URL);
+            if (apiConnection.getResponseCode() != 200) {
+                throw new NoAPIConnectionException("Error: Couldn't connect to API");
+            }
+            String JSONResponse = readAPIResponse(apiConnection);
+            JsonParser parser = new JsonParser();
+            JsonObject jsonObject = parser.parse(JSONResponse).getAsJsonObject();
+            JsonArray weather = jsonObject.getAsJsonArray("weather");
+            if (weather != null) {
+                JsonObject weatherObject = weather.get(0).getAsJsonObject();
+                String main = weatherObject.get("main").getAsString();
+                String description = weatherObject.get("description").getAsString();
+                String icon = weatherObject.get("icon").getAsString();
+                WeatherDescription weatherDescription = new WeatherDescription(main, description, icon);
+                return weatherDescription;
+            } else {
+                throw new NoDataException("No 'weather' data found in the response");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+
+    }
+
 }

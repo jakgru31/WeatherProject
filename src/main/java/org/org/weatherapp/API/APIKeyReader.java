@@ -8,7 +8,7 @@ public class APIKeyReader {
     public static String reader() {
         String APIKEY = "";
         try{
-            File apiKey = new File("/Users/jakubgruszka/Desktop/Pliki/JavaProjects/weatherApp/src/main/java/org/org/weatherapp/API/apiKey.txt"); //put your API key path
+            File apiKey = new File("src/main/java/org/org/weatherapp/API/apiKey.txt");
             Scanner reader = new Scanner(apiKey);
             while (reader.hasNext()){
                 APIKEY = reader.nextLine();
