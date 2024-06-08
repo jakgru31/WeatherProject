@@ -4,13 +4,16 @@ public class CurrentWeatherDisplay implements Display, Observer{
     private double temperature;
     private double humidity;
     private double pressure;
+    private String main;
+    private String description;
+    private String icon;
 
     @Override
     public void display() {
         System.out.println("CURRENT WEATHER DATA");
         System.out.println("Current temp: " + temperature);
-        System.out.println("Currnt hum: " + humidity);
-        System.out.println("Currnt press: " + pressure);
+        System.out.println("Current hum: " + humidity);
+        System.out.println("Current press: " + pressure);
     }
 
     @Override
@@ -19,4 +22,6 @@ public class CurrentWeatherDisplay implements Display, Observer{
         this.humidity=humidity;
         this.pressure=pressure;
     }
+
+
 }
